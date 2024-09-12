@@ -1,0 +1,83 @@
+# Diccionario de estudiantes
+estudiantes = {
+    "Alue1": ['Aguirre', 'Antonio', 2.8, 4.8, 4.9],
+    "Alue2": ['Becerra', 'Margarita', 3.1, 4.7, 4.8],
+    "Alu03": ['Cespedes', 'Katerine', 4.5, 1.9, 5.0],
+    "Alu04": ['De La Hoz', 'William', 4.5, 3.1, 3.1],
+    "Alu05": ['Fabregas', 'Jose', 5.2, 3.9, 4.1],
+    "Alu06": ['Guzman', 'Andrea', 2.7, 4.8, 3.6]
+
+# Función para agregar estudiante
+def agregar_estudiante(codigo, nombre, apellido, notas):
+    estudiantes[codigo] = [apellido, nombre] + notas
+
+# Función para actualizar estudiante
+def actualizar_estudiante(codigo, nuevo_datos):
+    if codigo in estudiantes:
+        estudiantes[codigo] = nuevo_datos
+    else:
+        print("Estudiante no encontrado.")
+
+# Función para borrar estudiante
+def borrar_estudiante(codigo):
+    if codigo in estudiantes:
+        del estudiantes[codigo]
+    else:
+        print("Estudiante no encontrado.")
+
+# Función para listar estudiantes
+def listar_estudiantes():
+    for codigo, datos in estudiantes.items():
+        print(f"{codigo}: {datos}")
+
+# Función para calcular promedio de un estudiante
+def calcular_promedio(codigo):
+    if codigo in estudiantes:
+        notas = estudiantes[codigo][2:]  # Obtener solo las notas
+        return sum(notas) / len(notas)
+    else:
+        print("Estudiante no encontrado.")
+        return None
+
+# Función para encontrar el estudiante con mayor promedio
+def estudiante_mayor_promedio():
+    mayor = None
+    codigo_mayor = None
+    for codigo in estudiantes.keys():
+        promedio = calcular_promedio(codigo)
+        if mayor is None or (promedio is not None and promedio > mayor):
+            mayor = promedio
+            codigo_mayor = codigo
+    return codigo_mayor
+
+# Función para encontrar el estudiante con menor promedio
+def estudiante_menor_promedio():
+    menor = None
+    codigo_menor = None
+    for codigo in estudiantes.keys():
+        promedio = calcular_promedio(codigo)
+        if menor is None or (promedio is not None and promedio < menor):
+            menor = promedio
+            codigo_menor = codigo
+    return codigo_menor
+
+# Función para calcular el promedio general del curso
+def promedio_general():
+    suma_total = 0
+    cantidad_estudiantes = len(estudiantes)
+    
+    for codigo in estudiantes.keys():
+        promedio = calcular_promedio(codigo)
+        if promedio is not None:
+            suma_total += promedio
+            
+    return suma_total / cantidad_estudiantes if cantidad_estudiantes > 0 else None
+
+# Ejemplo de uso del CRUD y cálculos
+agregar_estudiante("Alu07", "Pérez", "Ana", [4.0, 3.5, 4.2])
+listar_estudiantes()
+
+print(f"Promedio de Alue1: {calcular_promedio('Alue1')}")
+print(f"Estudiante con mayor promedio: {estudiante_mayor_promedio()}")
+print(f"Estudiante con menor promedio: {estudiante_menor_promedio()}")
+print(f"Promedio general del curso: {promedio_general()}")
